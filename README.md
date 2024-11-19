@@ -1,18 +1,29 @@
 ## Установка библиотек
-```sudo apt install -y python3-venv \
+```
+sudo apt install -y python3-venv \
 sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
 ```
 ## Создание виртуального окружения
-```python3 -m venv .venv```
+```
+python3 -m venv .venv
+```
 
 ## Переключение в контекст venv
-```source .venv/bin/activate```
+```
+source .venv/bin/activate
+```
 
 ## Выход из venv
-`deactivate`
+```
+deactivate
+```
 
 ## Обновляем pip
-`pip install --upgrade pip`
+```
+pip install --upgrade pip
+```
 
 ## Устанавлииваем библиотеки в venv
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
