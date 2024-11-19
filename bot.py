@@ -2,8 +2,8 @@ import time
 import logging
 import asyncio
 import os
+import datetime
 
-from datetime import datetime
 from dotenv import load_dotenv
 
 from aiogram import Bot, Dispatcher, types, F
@@ -41,7 +41,7 @@ async def command_memento_handler(message: types.Message, state: FSMContext):
 @dp.message(ChooseRem.choose_reminder, F.text)
 async def chose_remind(message: types.Message, state: FSMContext):
 	await state.update_data(choose_reminder=message.text.lower())
-	await message.answer('Введите время в формате "YYYY-MM-DD HH:MM:SS"')
+	await message.answer('Введите время в формате "YYYY.MM.DD HH:MM"')
 	await state.set_state(ChooseRem.choose_time)
 
 @dp.message(ChooseRem.choose_time, F.text)
@@ -50,14 +50,24 @@ async def chose_time(message: types.Message, state: FSMContext):
 	tg_id = message.from_user.id
 	data = await state.get_data()
 	time = await time_parser(data.get("choose_time"))
-
-#	await message.answer(f'{data.get("choose_time")}, {data.get("choose_reminder")}, {tg_id}')
 	await rq.set_reminder(time, data.get("choose_reminder"), tg_id)
 	await message.answer('Принял')
 	await state.clear()
 
 @dp.message(F.text == 'Что я помню')
 async def command_wir_handler(message: types.Message):
+	current_time = datetime.datetime.now()
+	tg_id = message.from_user.id
+	remembers = await rq.get_reminder(tg_id)
+	if remembers!="Мне еще нечего помнить":
+		for remember in remembers:
+			if remember.time > current_time:
+				await message.answer(f"{remember.time} {remember.reminder}")
+	else:
+		await message.answer(f"{remembers}")
+
+@dp.message(F.text == 'Вспомнить всё')
+async def command_total_recall_handler(message: types.Message):
 	tg_id = message.from_user.id
 	remembers = await rq.get_reminder(tg_id)
 	if remembers!="Мне еще нечего помнить":
@@ -67,7 +77,7 @@ async def command_wir_handler(message: types.Message):
 		await message.answer(f"{remembers}")
 
 async def time_parser(dtime):
-	result = datetime(2024, 8, 8, 15, 0, 0)
+	result = datetime.datetime.strptime(dtime, "%d.%m.%Y %H:%M")
 	return result
 
 async def main():
