@@ -60,8 +60,11 @@ async def chose_time(message: types.Message, state: FSMContext):
 async def command_wir_handler(message: types.Message):
 	tg_id = message.from_user.id
 	remembers = await rq.get_reminder(tg_id)
-	for remember in remembers:
-		await message.answer(f"{remember.time} {remember.reminder}")
+	if remembers!="Мне еще нечего помнить":
+		for remember in remembers:
+			await message.answer(f"{remember.time} {remember.reminder}")
+	else:
+		await message.answer(f"{remembers}")
 
 async def time_parser(dtime):
 	result = datetime(2024, 8, 8, 15, 0, 0)
