@@ -1,6 +1,6 @@
 ## Установка библиотек
 ```
-sudo apt install -y python3-venv \
+sudo apt install -y python3-venv
 sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
 ```
 ## Создание виртуального окружения
@@ -26,4 +26,10 @@ pip install --upgrade pip
 ## Устанавлииваем библиотеки в venv
 ```
 pip install -r requirements.txt
+```
+
+## Создаем файл .env и добавляем туда переменные
+```
+touch .env
+
 ```
