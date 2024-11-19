@@ -29,7 +29,11 @@ pip install -r requirements.txt
 ```
 
 ## Создаем файл .env и добавляем туда переменные
-```
+
+1) Создаем файл
 touch .env
 
-```
+2) Создаем в нем переменные
+TOKEN=[ВАШ ТОКЕН]
+SQLALCHEMY_URL=[URL БАЗЫ ДАННЫХ]
+
