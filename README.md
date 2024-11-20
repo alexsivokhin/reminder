@@ -61,9 +61,9 @@ ExecStart=РабочаяДиректориия/.venv/bin/python3 bot.py
 
 [Install]
 WantedBy=multi-user.target
-
 ```
-3)Добавление в автозагрузку и старт
+
+3) Добавление в автозагрузку и старт
 ```
 sudo systemctl enable НазваниеСервиса
 sudo systemctl start НазваниеСервиса
