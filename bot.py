@@ -41,7 +41,7 @@ async def command_memento_handler(message: types.Message, state: FSMContext):
 @dp.message(ChooseRem.choose_reminder, F.text)
 async def chose_remind(message: types.Message, state: FSMContext):
 	await state.update_data(choose_reminder=message.text.lower())
-	await message.answer('Введите время в формате "YYYY.MM.DD HH:MM"')
+	await message.answer('Введите время в формате "d.m.Y H:M"')
 	await state.set_state(ChooseRem.choose_time)
 
 @dp.message(ChooseRem.choose_time, F.text)

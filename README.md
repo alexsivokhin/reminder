@@ -23,7 +23,7 @@ deactivate
 pip install --upgrade pip
 ```
 
-## Устанавлииваем библиотеки в venv
+## Устанавливаем библиотеки в venv
 ```
 pip install -r requirements.txt
 ```
@@ -37,3 +37,34 @@ touch .env
 TOKEN=[ВАШ ТОКЕН]\
 SQLALCHEMY_URL=[URL БАЗЫ ДАННЫХ]
 
+## Сделать сервис
+
+1) Создать файл для systemd
+```
+cd /lib/systemd/system/
+sudo nano НазваниеСервиса.service
+```
+
+2) Конфиг файла .service
+```
+[Unit]
+Description=Описание сервиса
+After=network.target
+
+[Service]
+Type=idle
+Restart=always
+RestartSec=5
+KillMode=process
+WorkingDirectory=РабочаяДиректория
+ExecStart=РабочаяДиректориия/.venv/bin/python3 bot.py
+
+[Install]
+WantedBy=multi-user.target
+
+```
+3)Добавление в автозагрузку и старт
+```
+sudo systemctl enable НазваниеСервиса
+sudo systemctl start НазваниеСервиса
+```
